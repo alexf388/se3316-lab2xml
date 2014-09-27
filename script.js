@@ -290,11 +290,70 @@ function loadDropDownList(xmlDocument){
 }
 
 function updateTable(){
+	//loads data from xmlDocument mondial 
+	var xmlDoc = loadXMLDoc("mondial-3.0.xml");
 
-	alert("updateTable() has been called"); 
-	var index = document
-	alert (index); 
+	var continentDropDownIndex = document.getElementById('continentDropDownList').selectedIndex;
+	var continentDropDownName = document.getElementById('continentDropDownList').options[continentDropDownIndex].text; 
+	//alert (continentDropDownIndex); 
+	//alert (continentDropDownName); 
+	
+	//if the dropdownselected was 'All' we must show all the continents
+	if (continentDropDownName === 'All'){
+		//TODO: delete all rows 
+		deleteTable(); 	
+		//TODO: show the new info 
+		loadTable(xmlDoc); 
+	}
+	else{
+		deleteTable(); 		
+	}
+	
+	/*
+	
+	var continentsList = xmlDoc.getElementsByTagName('continent'); 
+	var continentID = ""; 
+	
+	//reads and gets the continentID from one of the five continents from the XMLdoc 
+	for (var i = 0 ; i < continentsList.length ; i++){
+		//alert (continentsList[i].getAttribute('name')); 
+	
+		if (continentsList[i].getAttribute('name') === continentDropDownName)
+			continentID = continentsList[i].getAttribute('id'); 
+	}	
+	//alert (continentID); 
+		
+	//now search for countries who have that continentID by looking for encompassed TagName and continent Attribute
+	//var countriesList = xmlDoc.getElementsByTagName('country'); 
+	//var citiesList = xmlDoc.getElementsByTagName('city');
+	var encompassedList = xmlDoc.getElementsByTagName('encompassed'); 
+	//alert (citiesList.length); 
+	//find which countries are in the specified continent by comparing continentID and the encompassed continent found in the city in country
+	for (var i = 0 ; i <  encompassedList.length ; i++){
+		if (encompassedList[i].getAttribute('continent') === continentID) {
+			var parentCountry = encompassedList[i].parentNode.getAttribute('name'); 
+			alert (parentCountry); 
+		
+		
+		
+		}
+		
+	}
+	*/
+	
+	
+}
 
+function deleteTable(){
+	//TODO: delete previous table anyways 	
+	var table= document.getElementById('dataTable');
+	var tableRows = table.getElementsByTagName('tr');
+	var rowCount = tableRows.length;
+
+	//remove table 
+	for (var i=rowCount-1; i>0; i--) {
+		table.removeChild(tableRows[i]);
+	}
 }
 
 
