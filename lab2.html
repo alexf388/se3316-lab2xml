@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Lab 2</title>
+        <script  src='script.js'></script>
+		<style>
+			table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			th, td {
+				padding: 5px;
+			}
+		</style>
+		
+    </head>
+    
+    <body>
+        
+	<h1  >Summary of  Data Set</h1>
+		<h2 id="numberOfContinents"> Number Of Continents: </h2> 
+	
+		<h2 id ="numberOfCountries">Number Of Countries: </h2>
+			
+			
+		<h2 id="numberOfCities"> Number Of Cities: 	</h2>
+			
+		
+		<h2 id = "Population"> Total Population: 	</h2>			
+		
+	<select id = "continentDropDownList" onchange="updateTable()" name = "continentDropDownList"> </select>
+
+	
+	<table id = "dataTable" > 
+		<tr>
+			<th>Country</th>
+			<th>Provinces</th> 
+			<th>Capital City </th>
+			<th>Population</th>
+		</tr>
+	</table> 	
+			
+	
+    </body>
+	
+	<script>
+		var xmlDoc=loadXMLDoc("mondial-3.0.xml");
+		calculateSummary(xmlDoc); 
+		loadTable(xmlDoc); 
+		//loadDropDownList(xmlDoc); 
+		
+	</script>
+	
+</html>
