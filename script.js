@@ -262,7 +262,7 @@ function loadTable(xmlDocument){
 		
 	}
 }
-/*
+
 function loadDropDownList(xmlDocument){
 	var xmlDoc=xmlDocument; 
 	
@@ -290,7 +290,7 @@ function loadDropDownList(xmlDocument){
 }
 
 function updateTable(){
-*/
+
 	alert("updateTable() has been called"); 
 	var index = document
 	alert (index); 
