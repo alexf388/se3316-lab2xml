@@ -306,40 +306,101 @@ function updateTable(){
 		loadTable(xmlDoc); 
 	}
 	else{
+		//delete table
 		deleteTable(); 		
-	}
-	
-	/*
-	
-	var continentsList = xmlDoc.getElementsByTagName('continent'); 
-	var continentID = ""; 
-	
-	//reads and gets the continentID from one of the five continents from the XMLdoc 
-	for (var i = 0 ; i < continentsList.length ; i++){
-		//alert (continentsList[i].getAttribute('name')); 
-	
-		if (continentsList[i].getAttribute('name') === continentDropDownName)
+		
+		//upload new data set 
+		var continentsList = xmlDoc.getElementsByTagName('continent'); 
+		var continentID = ""; 
+		
+		//reads and gets the continentID from one of the five continents from the XMLdoc 
+		for (var i = 0 ; i < continentsList.length ; i++){
+			//alert (continentsList[i].getAttribute('name')); 
+			
+			if (continentsList[i].getAttribute('name') === continentDropDownName)
 			continentID = continentsList[i].getAttribute('id'); 
-	}	
-	//alert (continentID); 
+		}	
+		//alert (continentID); 
 		
-	//now search for countries who have that continentID by looking for encompassed TagName and continent Attribute
-	//var countriesList = xmlDoc.getElementsByTagName('country'); 
-	//var citiesList = xmlDoc.getElementsByTagName('city');
-	var encompassedList = xmlDoc.getElementsByTagName('encompassed'); 
-	//alert (citiesList.length); 
-	//find which countries are in the specified continent by comparing continentID and the encompassed continent found in the city in country
-	for (var i = 0 ; i <  encompassedList.length ; i++){
-		if (encompassedList[i].getAttribute('continent') === continentID) {
-			var parentCountry = encompassedList[i].parentNode.getAttribute('name'); 
-			alert (parentCountry); 
-		
-		
-		
+		//now search for countries who have that continentID by looking for encompassed TagName and continent Attribute
+		var encompassedList = xmlDoc.getElementsByTagName('encompassed'); 
+				
+		//find which countries are in the specified continent by comparing continentID and the encompassed continent found in the city in country
+		for (var i = 0 ; i <  encompassedList.length ; i++){
+			var list = document.getElementById('dataTable'); 
+			var rowEntry = document.createElement('tr'); ; 
+			
+			if (encompassedList[i].getAttribute('continent') === continentID) {
+				var countryName= encompassedList[i].parentNode.getAttribute('name'); 
+				
+				var cellCountryEntry = document.createElement('td'); 
+				cellCountryEntry.appendChild(document.createTextNode(countryName)); 
+				rowEntry.appendChild(cellCountryEntry); 
+				 
+				var provinceList = encompassedList[i].parentNode.getElementsByTagName('province'); 
+				var cellProvinceEntry = document.createElement('td'); 
+				var provinceName = ""; 
+				
+				//province
+				if (provinceList.length == 0){
+					provinceName = "No provinces exist."; 
+				}
+				else{
+					//provinceName = "Some provinces exist."; 
+					for (var j = 0 ; j < provinceList.length ; j++){
+						if (j === provinceList.length -1 ) 								
+							provinceName += provinceList[j].getAttribute('name') ; 
+						else 
+							provinceName += provinceList[j].getAttribute('name') + ", " ;  
+					}
+				}
+				
+				//capital city 
+				var capitalCityID = encompassedList[i].parentNode.getAttribute('capital'); 
+				var capitalCityEntry = document.createElement('td');
+				var capitalCityName= ""; 
+				var capitalCityFound = false; 
+				
+				//search for capital city amongst the cities of the parent Node 
+				var cityList = encompassedList[i].parentNode.getElementsByTagName('city');
+				for (var j = 0 ; j < cityList.length ; j++){
+					if (capitalCityID === cityList[j].getAttribute('id') ){
+						capitalCityName = cityList[j].getElementsByTagName('name')[0].childNodes[0].nodeValue; 
+						 capitalCityFound = true; 
+					}
+				}
+				if (!capitalCityFound) {
+					capitalCityName = "Capital does not exist." ; 
+				}
+				//population
+				var population = encompassedList[i].parentNode.getAttribute('population'); 
+				var cellPopulationEntry = document.createElement('td'); 
+				
+				
+				//append province Names 
+				cellProvinceEntry.appendChild(document.createTextNode(provinceName)); 
+				rowEntry.appendChild(cellProvinceEntry); 
+				
+				//append capital city 
+				capitalCityEntry.appendChild(document.createTextNode(capitalCityName));
+				rowEntry.appendChild(capitalCityEntry); 
+				
+				//append population 
+				cellPopulationEntry.appendChild(document.createTextNode(population)); 
+				rowEntry.appendChild(cellPopulationEntry); 
+				
+				
+			}
+			
+			
+			
+			list.appendChild(rowEntry); 
 		}
 		
+		
+		
 	}
-	*/
+	
 	
 	
 }
